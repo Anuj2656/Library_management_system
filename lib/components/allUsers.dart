@@ -99,14 +99,21 @@ class AllUsers extends StatelessWidget {
 
                 String email = (document.data() as Map<String, dynamic>?)?['email'] ?? '';
                 Map<String, dynamic>? booksData = (document.data() as Map<String, dynamic>?)?['books'] as Map<String, dynamic>?;
+                List<String> borrowedBooks = [];
+print('$booksData');
+                if (booksData != null && booksData.isNotEmpty) {
+                  booksData.forEach((key, value) {
+                    if (value != null && value['title'] != null && value['title'] != "") {
+                      borrowedBooks.add(value['title']);
+                    }
+                  });
+                }
 
                 return ListTile(
                   title: Text("$email,"),
-                  subtitle: (booksData != null &&
-                      booksData['title'] != null &&
-                      booksData['title'] != "")
-                      ? Text("currently borrowing : ${booksData['title']}")
-                      : Text("Not borrowing a book"),
+                  subtitle: (borrowedBooks.isNotEmpty)
+                      ? Text("Currently borrowing: ${borrowedBooks.join(', ')}")
+                      : Text("Not borrowing any book"),
                 );
               }).toList(),
             );

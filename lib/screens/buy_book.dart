@@ -26,9 +26,7 @@ class _BuyBookState extends State<BuyBook> {
 
     try {
       final userSnapshot = await userDoc.get();
-   //   final bookSnapshot = await bookDoc.get();
       print("User data: ${userSnapshot.data()}");
-   //   print("Book data: ${bookSnapshot.data()}");
 
       if (userSnapshot.exists) {
         // Check if the book is already owned by any user
@@ -36,17 +34,21 @@ class _BuyBookState extends State<BuyBook> {
           // Get book data
           final bookData = bookQuery.docs.first.data() as Map<String, dynamic>;
 
+          // Fetch existing books
+          final existingBooks = userSnapshot.data()?['books'] ?? {};
+
           // Check if the book is already owned by the current user
-          if (userSnapshot.data()?['books']?[title] == null) {
-            // Add book to user's books map
+          if (existingBooks[title] == null) {
+            // Add the new book to existing books
+            existingBooks[title] = {
+              "author": bookData["author"],
+              "description": bookData["description"],
+              "category": bookData["category"],
+            };
+
+            // Update user's books map
             userDoc.update({
-              "books": {
-                title: {
-                  "author": bookData["author"],
-                  "description": bookData["description"],
-                  "category": bookData["category"],
-                }
-              }
+              "books": existingBooks,
             });
 
             // Show success dialog or perform other actions
@@ -69,6 +71,7 @@ class _BuyBookState extends State<BuyBook> {
       showMyDialog(context, 'An unexpected error occurred. Please try again later.');
     }
   }
+
 
 
   @override

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "296772280780",
+    "project_id": "librarian-68ed6",
+    "storage_bucket": "librarian-68ed6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296772280780:android:7f5bf4ece76af63fab7d69",
+        "android_client_info": {
+          "package_name": "com.example.librarian"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIYg2ZONuDMmLys1LrWwGi1E1e8s4XRBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

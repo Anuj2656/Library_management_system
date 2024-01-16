@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
                ],
               ),
                 SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.height * 0.2,
                 ),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                       setSpin();
                     } catch (e) {
                       print("message is : $e");
-                      showMyDialog(context, e.toString());
+                     // showMyDialog(context, e.toString());
                       setSpin();
                     }
                   },
@@ -180,7 +180,7 @@ Navigator.pop(context);
                   ],
                 ),
                 SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.height * 0.2,
                 ),
                 TextField(
                   keyboardType: TextInputType.emailAddress,

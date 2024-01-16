@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Librarian',
+          title: 'Library Management System',
           initialRoute: welcomeId,
           routes: {
             welcomeId: (context) => WelcomeScreen(),

@@ -52,7 +52,7 @@ Navigator.pop(context);
                 ],
                 ),
                 SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.height * 0.2,
                 ),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
@@ -64,7 +64,7 @@ Navigator.pop(context);
                       hintText: 'Enter your email'),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 TextField(
                   obscureText: true,

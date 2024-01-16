@@ -31,7 +31,7 @@ class WelcomeScreen extends StatelessWidget {
                 height: 40,
               ),
               Text(
-                "Librarian",
+                "Library Management System",
                 style: kWelcomeScreen,
               ),
               SizedBox(

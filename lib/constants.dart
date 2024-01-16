@@ -7,7 +7,7 @@ const Color brown = Color(0xFF6F35A5);
 const Color black = Color.fromRGBO(27, 26, 23, 1);
 
 const kWelcomeScreen = TextStyle(
-  fontSize: 60,
+  fontSize: 40,
   fontWeight: FontWeight.bold,
   color: brown,
 );

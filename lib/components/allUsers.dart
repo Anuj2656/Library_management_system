@@ -91,33 +91,45 @@ class AllUsers extends StatelessWidget {
 
             return ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                // List<String> borrowedBooks = [];
-
-                // for (var i in document.data()['books']) {
-                //   borrowedBooks.add(i["title"]);
-                // }
-
                 String email = (document.data() as Map<String, dynamic>?)?['email'] ?? '';
                 Map<String, dynamic>? booksData = (document.data() as Map<String, dynamic>?)?['books'] as Map<String, dynamic>?;
+
                 List<String> borrowedBooks = [];
-print('$booksData');
-                if (booksData != null && booksData.isNotEmpty) {
-                  booksData.forEach((key, value) {
-                    if (value != null && value['title'] != null && value['title'] != "") {
-                      borrowedBooks.add(value['title']);
-                    }
-                  });
+
+                print('books data for particular email: $booksData');
+
+                if (booksData != null) {
+                  borrowedBooks = booksData.keys.toList();
                 }
 
-                return ListTile(
-                  title: Text("$email,"),
-                  subtitle: (borrowedBooks.isNotEmpty)
-                      ? Text("Currently borrowing: ${borrowedBooks.join(', ')}")
-                      : Text("Not borrowing any book"),
+                print('borrowed books for $email: $borrowedBooks');
+
+                return Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3), // changes the position of the shadow
+                    ),
+                  ],
+                ),
+                  child: ListTile(
+                    title: Text("$email"),
+                    subtitle: (borrowedBooks.isNotEmpty)
+                        ? Text("Currently borrowing: ${borrowedBooks.join(', ')}")
+                        : Text("Not borrowing any book"),
+                  ),
                 );
               }).toList(),
             );
-          },
+
+              },
         ),
       ),
     );

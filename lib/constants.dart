@@ -237,6 +237,14 @@ dynamic browseBooks(context) {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3), // changes the position of the shadow
+                  ),
+                ],
               ),
               margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: ListTile(

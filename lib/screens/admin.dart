@@ -94,6 +94,12 @@ class _AdminState extends State<Admin> {
                 Navigator.pushNamed(context, AddBooksId);
               },
             ),
+    ReusableButton(
+    text: "List of users",
+    onPressed: () {
+    Navigator.pushNamed(context, allUsersId);
+    },
+    ),
           ],
         ),
       ),

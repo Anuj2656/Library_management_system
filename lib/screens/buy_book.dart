@@ -30,29 +30,39 @@ class _BuyBookState extends State<BuyBook> {
       print("User data: ${userSnapshot.data()}");
    //   print("Book data: ${bookSnapshot.data()}");
 
-      if (userSnapshot.exists && bookQuery.docs.isNotEmpty) {
-        // Get book data
-        final bookData = bookQuery.docs.first.data() as Map<String, dynamic>;
-        // Add book to user's books map
-        userDoc.update({
-          "books": {
-            title: {
-              "author": bookData["author"],
-              "description": bookData["description"],
-              "category": bookData["category"],
-            }
-          }
-        });
+      if (userSnapshot.exists) {
+        // Check if the book is already owned by any user
+        if (bookQuery.docs.isNotEmpty) {
+          // Get book data
+          final bookData = bookQuery.docs.first.data() as Map<String, dynamic>;
 
-        // Show success dialog or perform other actions
-        Navigator.pop(context);
-        showMyDialog2(context, 'Book added to your collection!');
-      } else {
-        if (bookQuery.docs.isEmpty) {
-          showMyDialog(context, 'Book not found');
+          // Check if the book is already owned by the current user
+          if (userSnapshot.data()?['books']?[title] == null) {
+            // Add book to user's books map
+            userDoc.update({
+              "books": {
+                title: {
+                  "author": bookData["author"],
+                  "description": bookData["description"],
+                  "category": bookData["category"],
+                }
+              }
+            });
+
+            // Show success dialog or perform other actions
+            Navigator.pop(context);
+            showMyDialog2(context, 'Book added to your collection!');
+          } else {
+            // Book is already owned by the current user
+            showMyDialog(context, 'You already own this book.');
+          }
         } else {
-          showMyDialog(context, 'User not found');
+          // Book not found
+          showMyDialog(context, 'Book not found');
         }
+      } else {
+        // User not found
+        showMyDialog(context, 'User not found');
       }
     } catch (e) {
       print("Error adding book: $e");

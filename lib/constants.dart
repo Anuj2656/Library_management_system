@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const Color cream = Color(0xFFF1E6FF);
 const Color orange = Color.fromRGBO(255, 131, 3, 1);
@@ -12,19 +13,14 @@ const kWelcomeScreen = TextStyle(
   color: brown,
 );
 
-const kButtonText = TextStyle(
-  color: cream,
-  fontSize: 20,
-  letterSpacing: 4,
-  // fontFamily: "Oswald",
-  fontWeight: FontWeight.w700,
+TextStyle buttonText =  TextStyle(
+  color: Colors.black,
+  fontSize: 20.sp,
 );
 
-const kLargeText = TextStyle(
-  fontSize: 40,
+ TextStyle kLargeText = TextStyle(
+  fontSize: 30.sp,
   fontWeight: FontWeight.w800,
-  letterSpacing: 4,
-  // fontFamily: "Oswald",
 );
 
 const kTextFieldDecoration = InputDecoration(
@@ -62,12 +58,12 @@ const kTextFieldDecoration2 = InputDecoration(
 const kAppText = TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.bold,
-  letterSpacing: 1,
+
 );
 const kAppText2 = TextStyle(
   fontSize: 25,
   fontWeight: FontWeight.bold,
-  letterSpacing: 1,
+
 );
 
 const kContactDetails = TextStyle(
@@ -131,22 +127,59 @@ Future<void> showMyDialog2(context, text) async {
 }
 
 dynamic currentlyBorrowing(context, text) async {
+  List<String> items = text.split(','); // Split text by commas
+
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('I am currently borrowing: '),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(text),
-            ],
-          ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(
+              width: double.infinity,
+              child: Container(
+                child: Image.asset(
+                  'assets/images/getbook.gif', // Replace 'assets/loading.gif' with your GIF path
+                  width: 200.w,
+                  height: 200.h,
+                ),
+              ),
+            ),
+            Text(
+              'You are currently borrowing:',
+              style: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                items.length,
+                    (index) {
+                  // Generate a list of Text widgets with numbers
+                  return Text(
+                    '${index + 1}. ${items[index].trim()}',
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
         actions: <Widget>[
-          TextButton(
-            child: Text('Ok'),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFF800020),
+            ),
+            child: Text('Okay'),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -236,7 +269,7 @@ dynamic browseBooks(context) {
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(10.0.sp),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
@@ -246,14 +279,37 @@ dynamic browseBooks(context) {
                   ),
                 ],
               ),
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              margin: EdgeInsets.all(10.sp),
               child: ListTile(
-                title: Text('$title by $author'),
+                leading: Container(
+                  height: double.infinity, // Adjust the height of the icon
+                  width: 100.w, // Adjust the width of the icon
+                  decoration: BoxDecoration(
+                    color: Colors.blue, // You can change the color or use an image here
+                    borderRadius: BorderRadius.circular(10.0.sp),
+                  ),
+                  child: Icon(size: 100.h,
+                    Icons.book,
+                    color: Colors.white54,
+                  ),
+                ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Book Name:- $title'),
+                    SizedBox(height: 10.h,),
+                    Text('Author Name:- $author'),
+                  ],
+                ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 10.h,),
                     Text('Category : $category'),
+                    SizedBox(height: 10.h,),
                     Text('Price : $price'),
+                    SizedBox(height: 10.h,),
+                    Text('Description:- $description'),
                   ],
                 ),
                 onTap: () {

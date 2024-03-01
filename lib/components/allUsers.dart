@@ -50,6 +50,7 @@ class AllUsers extends StatelessWidget {
 }
 */
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:librarian/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -61,14 +62,25 @@ class AllUsers extends StatelessWidget {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
       appBar: AppBar(
-        title: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios,
-          color: Colors.black,
-          ),
+        title: Row(
+          children: [
+    IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios,
+            color: Colors.black,
+            ),
 
+          ),
+            Text('List of Users',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.sp,
+              color: Colors.black
+            ),
+            ),
+       ],
         ),
         backgroundColor: cream,
         automaticallyImplyLeading: false,
@@ -86,7 +98,13 @@ class AllUsers extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading");
+              return Center(
+                child: Image.asset(
+                  'assets/images/loading.gif', // Replace 'assets/loading.gif' with your GIF path
+                  width: 100.w,
+                  height: 100.h,
+                ),
+              );
             }
 
             return ListView(
@@ -105,25 +123,43 @@ class AllUsers extends StatelessWidget {
                 print('borrowed books for $email: $borrowedBooks');
 
                 return Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes the position of the shadow
-                    ),
-                  ],
-                ),
+                  height: 200.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0.sp),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes the position of the shadow
+                      ),
+                    ],
+                  ),
+                  margin: EdgeInsets.all(10.sp),
                   child: ListTile(
+                    leading: Container(
+                      height: double.infinity, // Adjust the height of the icon
+                      width: 100.w, // Adjust the width of the icon
+                      decoration: BoxDecoration(
+                        color: Colors.blue, // You can change the color or use an image here
+                        borderRadius: BorderRadius.circular(10.0.sp),
+                      ),
+                      child: Icon(size: 100.h,
+                        Icons.person,
+                        color: Colors.white54,
+                      ),
+                    ),
                     title: Text("$email"),
                     subtitle: (borrowedBooks.isNotEmpty)
-                        ? Text("Currently borrowing: ${borrowedBooks.join(', ')}")
-                        : Text("Not borrowing any book"),
+                        ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        borrowedBooks.length,
+                            (index) => Text("${index + 1}. ${borrowedBooks[index]}"),
+                      ),
+                    )
+                         : Text("Not borrowing any book"),
                   ),
                 );
               }).toList(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:librarian/constants.dart';
 
 class GetContact extends StatelessWidget {
@@ -27,7 +28,7 @@ class GetContact extends StatelessWidget {
                       iconMap[k]!
                     ,
                       SizedBox(
-                        width: 30,
+                        width: 30.w,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.6,
@@ -39,7 +40,7 @@ class GetContact extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 25.h,
                   ),
                 ],
               ),
@@ -51,8 +52,10 @@ class GetContact extends StatelessWidget {
           );
         } else {
           return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.lightBlueAccent,
+            child: Image.asset(
+              'assets/images/loading.gif', // Replace 'assets/loading.gif' with your GIF path
+              width: 100.w,
+              height: 100.h,
             ),
           );
         }
